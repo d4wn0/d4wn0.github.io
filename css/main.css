@@ -974,33 +974,40 @@ ol li {
     }
 }
 
+
+
+@media (max-width: 768px) {  
+    #toc {  
+        visibility: hidden; /* 小屏幕上隐藏目录 */  
+    }  
+}
+
 #toc {
     position: fixed; /* 固定在侧边栏 */
     left: 0; /* 距离页面左边0px */
-    top: 100px; /* 距离页面顶部的距离，可以根据需求调整 */
+    top: 100px; /* 距离页面顶部的距离 */
     width: 300px; /* 目录的宽度 */
     max-height: 80vh; /* 使用视口高度单位，确保在视口中滚动 */
     overflow-y: auto; /* 允许目录滚动 */
     padding-left: 10px; /* 给目录内容增加一些内边距 */
-    background-color: #f8f9fa; /* 背景颜色，可以根据需求调整 */
-    border-right: 1px solid #e0e0e0; /* 添加一个右边框来分隔目录和内容 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影以增加可见性 */
+    background-color: #f8f9fa; /* 背景颜色 */
+    border-right: 1px solid #e0e0e0; /* 添加右边框 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影 */
 }
 
-/* 高亮当前目录项的整个块 */
 #toc a.active {
-    display: block; /* 让整个链接块级显示 */
+    display: block; /* 让链接块级显示 */
     font-weight: bold; /* 加粗 */
     color: #ffffff; /* 设置文字为白色 */
     background-color: #007bff; /* 设置背景颜色为蓝色 */
-    padding: 5px; /* 给块增加一些内边距 */
-    border-radius: 5px; /* 添加圆角效果 */
+    padding: 5px; /* 给块增加内边距 */
+    border-radius: 5px; /* 添加圆角 */
     text-decoration: none; /* 去掉下划线 */
 }
 
-/* 目录标题 */
 .sidebar-title {
     font-size: 1.2em;
     margin-bottom: 10px;
     display: block;
 }
+
