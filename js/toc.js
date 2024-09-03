@@ -1,19 +1,34 @@
 document.addEventListener("DOMContentLoaded", function() {
     const tocLinks = document.querySelectorAll("#toc a");
-    const sections = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const sections = document.querySelectorAll(".content h1, .content h2, .content h3, .content h4, .content h5, .content h6");
     const offset = 100; // 顶部固定导航栏的高度
 
+    // 目录激活函数
     function activateLink() {
-        let index = sections.length;
+        const windowHeight = window.innerHeight;
+        const scrollY = window.scrollY;
+        const middlePosition = scrollY + windowHeight / 2 - 150;
+        let closestIndex = -1;
+        let closestDistance = Infinity;
 
-        while (--index && window.scrollY + offset < sections[index].getBoundingClientRect().top + window.scrollY) {}
+        sections.forEach((section, i) => {
+            const rect = section.getBoundingClientRect();
+            const sectionTop = rect.top + scrollY;
+            const distance = Math.abs(sectionTop - middlePosition);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        });
 
         tocLinks.forEach((link) => link.classList.remove("active"));
-        if (tocLinks[index]) {
-            tocLinks[index].classList.add("active");
+        if (closestIndex !== -1 && tocLinks[closestIndex]) {
+            tocLinks[closestIndex].classList.add("active");
         }
     }
 
+    // 滑动跳转函数
     function scrollToSection(event, section) {
         event.preventDefault();  // 阻止默认的跳转行为
         const targetOffsetTop = section.getBoundingClientRect().top + window.scrollY - offset;
@@ -23,18 +38,19 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // 添加点击事件监听器
     tocLinks.forEach((link, i) => {
         link.addEventListener("click", function(event) {
             scrollToSection(event, sections[i]);
         });
     });
 
-    activateLink();  // 初始时检查一次
-    window.addEventListener("scroll", activateLink);  // 监听滚动事件
-
-    // 处理视口大小变化时的调整
-    window.addEventListener("resize", activateLink);
+    // 初始激活状态及滚动事件监听
+    activateLink();
+    window.addEventListener("scroll", activateLink);
+    window.addEventListener("resize", activateLink);  // 处理视口大小变化时的调整
 });
+
 
 
 document.addEventListener('DOMContentLoaded', function() {  
