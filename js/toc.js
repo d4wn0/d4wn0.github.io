@@ -1,12 +1,12 @@
-// 第一段代码：处理目录链接激活和滚动行为
 document.addEventListener("DOMContentLoaded", function() {
     const tocLinks = document.querySelectorAll("#toc a");
     const sections = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const offset = 100; // 顶部固定导航栏的高度
 
     function activateLink() {
         let index = sections.length;
 
-        while (--index && window.scrollY + 100 < sections[index].offsetTop) {}
+        while (--index && window.scrollY + offset < sections[index].getBoundingClientRect().top + window.scrollY) {}
 
         tocLinks.forEach((link) => link.classList.remove("active"));
         if (tocLinks[index]) {
@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function scrollToSection(event, section) {
         event.preventDefault();  // 阻止默认的跳转行为
-        const targetOffsetTop = section.offsetTop;
+        const targetOffsetTop = section.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({
-            top: targetOffsetTop - 100,  // 调整偏移量以考虑顶部固定的导航栏或其他元素
+            top: targetOffsetTop,  // 精确滚动到目标位置
             behavior: "smooth"  // 平滑滚动
         });
     }
@@ -29,8 +29,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    activateLink();
-    window.addEventListener("scroll", activateLink);
+    activateLink();  // 初始时检查一次
+    window.addEventListener("scroll", activateLink);  // 监听滚动事件
+
+    // 处理视口大小变化时的调整
+    window.addEventListener("resize", activateLink);
 });
 
 
@@ -66,5 +69,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始时检查一次  
     checkOverlapAndHideTocIfNeeded();  
 }); 
-
-
