@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>d4wn&#39;个人网站</title>
+    <title>d4wn&#39;blog</title>
     <meta name="author" content="d4wn" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -61,7 +61,7 @@
         <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
     <nav id="desktop-menu">
         <a class="title" href="/">
-            <span>D4WN&#39;个人网站</span>
+            <span>D4WN&#39;BLOG</span>
         </a>
         
         <a href="/">
@@ -93,7 +93,7 @@
     <nav id="mobile-menu">
         <div class="title" @click="showMenuItems = !showMenuItems">
             <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;D4WN&#39;个人网站</span>
+            <span>&emsp;D4WN&#39;BLOG</span>
         </div>
         <transition name="slide">
             <div class="items" v-show="showMenuItems">
@@ -156,7 +156,7 @@
     <div
         id="home-background"
         ref="homeBackground"
-        data-images="/images/background.jpg"
+        data-images="/images/background-1.jpg,/images/background-2.webp,/images/background-3.jpg,/images/background-4.jpg,/images/background-5.jpg"
     ></div>
     <div id="home-info" @click="homeClick">
         <span class="loop"></span>
@@ -165,7 +165,7 @@
         <span class="loop"></span>
         <span class="info">
             <div class="wrap">
-                <h1>d4wn&#39;个人网站</h1>
+                <h1>d4wn&#39;blog</h1>
                 <h3></h3>
                 <h5></h5>
             </div>
@@ -179,6 +179,54 @@
 >
     <div id="home-posts">
         
+
+<div class="post">
+    <a href="/2024/09/04/nepctf-2024/">
+        <h2 class="post-title">nepctf-2024</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/wp/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                wp
+            </a>
+        </span>
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/4
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>nepctf做题记录</p>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/wp/" style="color: #03a9f4">wp</a>
+        </span>
+        
+    </div>
+    <a href="/2024/09/04/nepctf-2024/" class="go-post">阅读全文</a>
+</div>
 
 <div class="post">
     <a href="/2024/09/03/helloworld/">
@@ -230,7 +278,7 @@
         </div>
         <div class="name">d4wn</div>
         <div class="description">
-            <p>Description<br>…</p>
+            <p>Description<br>个人博客，用于记录学习过程中的一些东西</p>
 
         </div>
         
@@ -254,7 +302,7 @@
     <div id="footer-wrap">
         <div>
             &copy;
-            2022 - 2024 d4wn&#39;个人网站
+            2022 - 2024 d4wn&#39;blog
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
