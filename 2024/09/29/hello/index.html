@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>categories | d4wn&#39;blog</title>
+    <title>hello | d4wn&#39;blog</title>
     <meta name="author" content="d4wn" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -37,6 +37,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -150,26 +154,57 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        
-        <span>
-            <a href="/categories/wp/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                wp
-            </a>
+            <div class="article">
+    <div>
+        <h1>hello</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/29
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/hello/" style="color: #03a9f4">
+                    hello
+                </a>
+            </span>
+            
+        </span>
+        
     </div>
+
+    
+        <div class="content-container">
+            <div id="toc" class="toc">
+                <strong class="sidebar-title">目录</strong>
+                
+            </div>
+            <div class="content" v-pre>
+                <p>dsdasfd</p>
+
+            </div>
+        </div>        
+    
+
+    
+    
+    
+    
+    
     
 </div>
-
+<script src="/js/toc.js"></script>
             <footer id="footer">
     <div id="footer-wrap">
         <div>
@@ -198,6 +233,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>
